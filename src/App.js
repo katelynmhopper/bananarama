@@ -37,9 +37,9 @@ function App() {
 	};
 
 	const randomSelection = () => {
-		return Math.floor(Math.random() * 100) / 3;
+		return Math.floor(Math.random() * 100) % 3;
 	};
-	console.log(randomSelection);
+	console.log(randomSelection());
 	const buttonStyle = {
 		margin: '12px',
 		padding: '12px',
