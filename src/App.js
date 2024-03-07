@@ -24,57 +24,75 @@ function App() {
 	const [firstPlayersTurn, setFirstPlayersTurn] = useState(true);
 	const [playerOneMove, setPlayerOneMove] = useState('');
 	const [playerTwoMove, setPlayerTwoMove] = useState('');
+	const [playerOneScore, setPlayerOneScore] = useState(0);
+	const [playerTwoScore, setPlayerTwoScore] = useState(0); 
 
-	const handle = (move) => () => {
-		console.log(move);
-		if (!playerOneMove) return setPlayerOneMove(move);
+	const handle = (move) => {
+		if (firstPlayersTurn) return setPlayerOneMove(move);
+		else setPlayerTwoMove(move)
 
 		if (playRPS(playerOneMove, playerTwoMove)) {
 			setWinner('player 1');
+			setPlayerOneScore(prevScore => prevScore + 1);
 		} else {
 			setWinner('player 2');
+			setPlayerTwoScore(prevScore => prevScore + 1);
 		}
+		console.log('winner', winner);
 	};
 
-	const randomSelection = () => {
-		return Math.floor(Math.random() * 100) % 3;
-	};
-	console.log(randomSelection());
+	const restart = () => { 
+		setPlayerOneScore(0);
+		setPlayerTwoScore(0);
+		setFirstPlayersTurn(true)
+		setWinner('');
+	}
 	const buttonStyle = {
 		margin: '12px',
 		padding: '12px',
 		fontSize: '20px',
+		borderRadius: '5px', 
+		boxShadow: '2px 2px 3px #999'
 	};
+
+	const play = (move) => {
+		if (firstPlayersTurn) handle(move) ;
+		else handle(move)
+		setFirstPlayersTurn(!firstPlayersTurn)
+	}
 
 	return (
 		<div className='App'>
+			<div>
+				<h2>Score</h2>
+				<div>Player One {playerOneScore} Player Two {playerTwoScore}</div>
+			</div>
 			<button
 				style={{ ...buttonStyle, backgroundColor: 'brown', color: 'white' }}
-				// onClick={handle('rock')}
-				onClick={() => setPlayerOneMove('rock')}
+				onClick={() => play('rock')}
 			>
 				Rock
 			</button>
 			<button
 				style={{ ...buttonStyle, backgroundColor: 'gray' }}
-				// onClick={handle('scissors')}
-				onClick={() => setPlayerOneMove('scissors')}
+				onClick={() => play('scissors')}
 			>
 				Scissors
 			</button>
 			<button
 				style={{ ...buttonStyle, backgroundColor: 'white' }}
-				// onClick={handle('paper')}
-				onClick={() => setPlayerOneMove('paper')}
+				onClick={() => play('paper')}
 			>
 				Paper
 			</button>
 			<button
 				style={{ ...buttonStyle, backgroundColor: 'red' }}
-				onClick={handle('restart')}
+				onClick={() => restart()}
 			>
 				Restart
 			</button>
+			{!winner && <div>{firstPlayersTurn ? "first player" : "second player"}'s turn...</div>}
+			{winner && <div>The winner is: {winner}</div>}
 		</div>
 	);
 }
