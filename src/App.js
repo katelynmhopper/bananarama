@@ -1,5 +1,5 @@
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 // //Each team can pick the language/library to use.
 // When the user clicks an option, a computer option should be shown or you can play another user
 // There are 5 rounds to the game, each round should show who won the round
@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 // After the game has been played a restart button should appear to restart the game
 // You have 45 minutes to complete this exercise
 // It should work and look good!
-// Voting will be based on code cleanliness, code efficiency, and creativity on the asthetics.
+// Voting will be based on code cleanliness, code efficiency, and creativity on the aesthetics.
 
 const playRPS = (firstPlayerMove, secondPlayerMove) => {
 	//first player true when win
